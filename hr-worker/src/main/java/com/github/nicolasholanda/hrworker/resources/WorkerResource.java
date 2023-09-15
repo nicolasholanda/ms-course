@@ -23,20 +23,11 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/workers")
 public class WorkerResource {
 
-    private static Logger logger = LoggerFactory.getLogger(WorkerResource.class);
-
-    @Value("${test.config}")
-    private String testConfig;
-
-    @Autowired
-    private Environment env;
-
     @Autowired
     private WorkerRepository repository;
 
     @GetMapping("/configs")
     public ResponseEntity<Void> getConfig() {
-        logger.info("Config = " + testConfig);
         return ResponseEntity.noContent().build();
     }
 
@@ -47,7 +38,6 @@ public class WorkerResource {
 
     @GetMapping("{id}")
     public ResponseEntity<Worker> findById(@PathVariable("id") Long id) {
-        logger.info("Port = " + env.getProperty("local.server.port"));
         return ok(repository.findById(id).orElseGet(null));
     }
 }
